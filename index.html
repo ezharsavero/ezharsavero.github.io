@@ -1,1225 +1,433 @@
-<!DOCTYPE html>
-<html lang="en">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Ezhar Savero</title>
+<style>
+  /* Layout: single-column, left-aligned editorial. Sticky nav, ink "server-room" ground,
+     copper signal accent, IBM Plex type system. Deliberate single dark theme. */
+  :root{
+    --bg:#0c0f14;        /* ink, slight blue bias */
+    --panel:#12161d;     /* raised panel */
+    --panel-2:#171c25;   /* hover / nested */
+    --line:#262d38;      /* hairline */
+    --line-soft:#1c222b;
+    --fg:#e9eef5;         /* cool near-white */
+    --muted:#8b95a6;      /* steel grey */
+    --muted-2:#5e6878;    /* dimmer */
+    --accent:#e06a3c;     /* copper */
+    --accent-soft:#f0a07f;
+    --steel:#58b4c6;      /* cool data accent */
+    --ok:#56c08d;
+    --radius:4px;
+    --maxw:72rem;
+    --gutter:max(18px, env(safe-area-inset-left,0px));
+    --gutter-r:max(18px, env(safe-area-inset-right,0px));
+    color-scheme:dark;
+    --f-display:"Sora","Segoe UI",system-ui,sans-serif;
+    --f-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--fg);font-family:var(--f-body);line-height:1.6;
+       -webkit-font-smoothing:antialiased;font-size:16px}
+  h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.1;text-wrap:balance;margin:0}
+  a{color:inherit;text-decoration:none}
+  p{margin:0}
+  ::selection{background:var(--accent);color:#1a0d06}
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width initial-scale=1" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  .wrap{max-width:var(--maxw);margin-inline:auto;padding-left:var(--gutter);padding-right:var(--gutter-r)}
 
-  <!-- bootstrap css js -->
-  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> -->
-  <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script> -->
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;
+       background:rgba(12,15,20,.82);backdrop-filter:blur(10px);
+       border-bottom:1px solid var(--line-soft)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+          padding-block:.85rem}
+  .brand{display:flex;align-items:center;gap:.6rem;font-family:var(--f-mono);
+         font-size:.9rem;letter-spacing:.02em}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--ok);
+              box-shadow:0 0 0 3px rgba(86,192,141,.18);flex:none}
+  .brand b{font-weight:600}
+  .nav-links{display:flex;gap:.3rem;align-items:center}
+  .nav-links a{font-size:.86rem;color:var(--muted);padding:.4rem .7rem;border-radius:var(--radius)}
+  .nav-links a:hover{color:var(--fg);background:var(--panel)}
+  .nav-toggle{display:none;background:none;border:1px solid var(--line);color:var(--fg);
+              font-family:var(--f-mono);font-size:.8rem;padding:.45rem .7rem;border-radius:var(--radius);cursor:pointer}
 
-  <!-- Materialize - Compiled and minified CSS-->
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css" />
-  <!-- Font Awesome Icon - CSS-->
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-  <!-- Custom Styles-->
-  <link rel="stylesheet" href="/assets/css/style.css" />
-  <title>Varad Bhogayata | Software Developer</title>
-  <!-- Open Graph-->
-  <meta property="og:locale" content="en_US" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Varad Bhogayata | Software Developer" />
-  <meta property="og:description" content="Software Developer" />
-  <meta property="og:url" content="varadbhogayata.github.io" />
-  <meta property="og:site_name" content="Varad Bhogayata | Software Developer" />
-  <meta property="article:publisher" content="varadbhogayata.github.io" />
-  <meta property="og:image" content="" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:site" content="@varad_bhogayata" />
-  <meta name="twitter:title" content="Varad Bhogayata | Software Developer" />
-  <meta name="twitter:description" content="Software Developer" />
-  <meta name="twitter:url" content="varadbhogayata.github.io" />
-  <meta name="author" content="Varad Bhogayata" />
-  <meta name="description" content="Software Developer" />
-  <link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicon/apple-icon-57x57.png" />
-  <link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicon/apple-icon-60x60.png" />
-  <link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-icon-72x72.png" />
-  <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicon/apple-icon-76x76.png" />
-  <link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-icon-114x114.png" />
-  <link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicon/apple-icon-120x120.png" />
-  <link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicon/apple-icon-144x144.png" />
-  <link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicon/apple-icon-152x152.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-icon-180x180.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon/android-icon-192x192.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon/favicon-96x96.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon/favicon-16x16.png" />
-  <link rel="manifest" href="/assets/img/favicon/manifest.json" />
-  <meta name="msapplication-TileColor" content="#ffffff" />
-  <meta name="msapplication-TileImage" content="/assets/img/favicon/ms-icon-144x144.png" />
-  <meta name="theme-color" content="#ffffff" />
-  <!--if lt IE 9script(src='//html5shim.googlecode.com/svn/trunk/html5.js')
-    -->
-  <meta name="robots" content="index, follow" />
-  <meta name="google-site-verification" content="_qxK8tePiU2fhnwlwnJ7pkDFnj1k2EiKq_cYGy1Cb84" />
-</head>
+  /* ---------- hero ---------- */
+  .hero{padding-block:clamp(3.5rem,9vw,6rem) clamp(2.5rem,6vw,4rem);
+        display:grid;grid-template-columns:1.3fr .9fr;gap:clamp(2rem,5vw,4rem);align-items:center}
+  .tag{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--f-mono);
+       font-size:.76rem;color:var(--muted);border:1px solid var(--line);
+       padding:.35rem .7rem;border-radius:100px;margin-bottom:1.6rem}
+  .tag .live{width:7px;height:7px;border-radius:50%;background:var(--ok);flex:none;
+             animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .hero h1{font-size:clamp(2.6rem,7vw,4.6rem);letter-spacing:-.02em;font-weight:700}
+  .hero .role{font-family:var(--f-mono);color:var(--accent);font-size:clamp(1rem,2.4vw,1.25rem);
+              margin-top:.8rem;letter-spacing:.01em}
+  .hero .lede{color:var(--muted);max-width:34ch;margin-top:1.4rem;font-size:1.05rem}
+  .cta{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2rem}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.9rem;font-weight:500;
+       padding:.7rem 1.1rem;border-radius:var(--radius);border:1px solid var(--line);
+       color:var(--fg);transition:border-color .18s,background .18s,transform .18s}
+  .btn svg{width:16px;height:16px;flex:none}
+  .btn:hover{background:var(--panel);border-color:var(--muted-2);transform:translateY(-1px)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#180b05;font-weight:600}
+  .btn.primary:hover{background:var(--accent-soft);border-color:var(--accent-soft)}
 
-<body>
-  <!-- Navigation Menu-->
-  <!-- Nav class 1 -->
-  <nav class="hide-on-small-only">
-    <ul class="side-nav fixed section table-of-contents">
+  /* portrait */
+  .portrait{justify-self:center;position:relative;width:100%;max-width:300px}
+  .portrait img{width:100%;height:auto;display:block;border-radius:6px;border:1px solid var(--line);
+      filter:grayscale(.12) contrast(1.02)}
+  .portrait::after{content:"";position:absolute;inset:0;border-radius:6px;pointer-events:none;
+      box-shadow:inset 0 -80px 90px -45px rgba(12,15,20,.85),inset 0 0 0 1px rgba(224,106,60,.12)}
+  .portrait .badge{position:absolute;left:12px;bottom:12px;background:var(--accent);color:#180b05;
+      font-family:var(--f-mono);font-size:.72rem;font-weight:600;padding:.4rem .7rem;border-radius:4px;
+      box-shadow:0 8px 24px rgba(0,0,0,.45);z-index:1}
 
-      <!-- <img src="/assets/img/my-passport-photo.jpg" class="circle img-responsive" alt="avatar" 
-      width="130px" height="130px" style="display:block; margin: 12px; margin-left:auto; margin-right: auto; 
-      max-width: 10rem; max-height: 10rem; border: 0.17rem solid #00796b; border-radius: 50%;"> 
-      
-      <hr style="width: 100%;"> -->
-      <li class="logo">
-        <a id="logo-container" aria-label="Navigate to the beginning of the page" href="#intro"
-          class="brand-logo grey-blue-text">
-          <img src="/assets/img/my-passport-photo.jpg" class="circle img-responsive" alt="avatar" width="130px"
-            height="130px" style="display:block; margin: -25px; margin-left:-5.5px; margin-right: auto; 
-      max-width: 10rem; max-height: 10rem; border: 0.18rem hidden #00796b; border-radius: 50%;">
-        </a>
-      </li>
-      <!-- <img src="/assets/img/my-passport-photo.jpg" alt="Avatar"> -->
-      <!-- <li class="logo">
-        <p>profile</p>
-      </li> -->
-      <!-- <div class="image-cropper">
-        <img src="/assets/img/my-passport-photo.jpg" alt="avatar" class="profile-pic">
-      </div> -->
-      <!-- <div class="col s2">
-        <img src="/assets/img/my-passport-photo.jpg" alt="" class="circle responsive-img profile-pic">
-      </div> -->
-      <!-- <div class="col col s4 m4 l4"> -->
-      <!-- <img src="/assets/img/my-passport-photo.jpg" alt="" class="circle responsive-img valign profile-image">
-      </div> -->
+  /* ---------- sections ---------- */
+  section{padding-block:clamp(3rem,7vw,5rem);border-top:1px solid var(--line-soft)}
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
+            margin-bottom:2.2rem;flex-wrap:wrap}
+  .sec-head h2{font-size:clamp(1.5rem,3.5vw,2.1rem);letter-spacing:-.01em}
+  .sec-head .meta{font-family:var(--f-mono);font-size:.78rem;color:var(--muted-2)}
 
-      <!-- <div class="text-center">
-        <span class="badge badge-white badge-pill profile-designation">UI / UX Designer</span>
-      </div> -->
-      <!-- <span class="d-none d-lg-block">
-        <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/assets/img" alt="">
-      </span> -->
-      <!-- <li class="logo">
-        <a id="logo-container" aria-label="Navigate to the beginning of the page" href="#intro"
-          class="brand-logo grey-blue-text">
-          <h1>Varad Bhogayata<span class="black-text light">Python Developer</span></h1>
-        </a>
-      </li> -->
-      <li class="bold">
-        <a aria-label="Navigate to the About section" href="#about" class="waves-effect waves-dark teal-text"><i
-            class="mdi-social-person small"></i><span>About</span></a>
-      </li>
-      <li class="bold">
-        <a aria-label="Navigate to the Experience section" href="#experience"
-          class="waves-effect waves-dark teal-text"><i
-            class="mdi-action-trending-up small"></i><span>Experience</span></a>
-      </li>
-      <!-- <li class="bold">
-        <a aria-label="Navigate to the Projects section" href="#projects" class="waves-effect waves-dark indigo-text"><i
-            class="mdi-av-web small"></i><span>Projects</span></a>
-      </li> -->
-      <li class="bold">
-        <a aria-label="Navigate to the Projects section" href="#projects" class="waves-effect waves-dark teal-text"><i
-            class="mdi-av-my-library-books small"></i><span>Projects</span></a>
-      </li>
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,4vw,3rem);align-items:start}
+  .about-grid p{color:var(--fg);font-size:1.08rem}
+  .about-grid p + p{margin-top:1rem;color:var(--muted);font-size:1rem}
+  .facts{display:grid;gap:.1rem;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  .fact{display:flex;justify-content:space-between;gap:1rem;padding:.9rem 1.1rem;background:var(--panel);
+        border-bottom:1px solid var(--line-soft);font-size:.92rem}
+  .fact:last-child{border-bottom:none}
+  .fact span:first-child{color:var(--muted);font-family:var(--f-mono);font-size:.8rem}
+  .fact span:last-child{text-align:right}
 
+  /* skills */
+  .stacks{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-soft);
+          border:1px solid var(--line-soft);border-radius:var(--radius);overflow:hidden}
+  .stack{background:var(--panel);padding:1.4rem}
+  .stack h3{font-family:var(--f-mono);font-size:.82rem;color:var(--accent);font-weight:500;
+            letter-spacing:.04em;margin-bottom:1rem}
+  .chips{display:flex;flex-wrap:wrap;gap:.5rem}
+  .chip{font-size:.85rem;padding:.4rem .75rem;border:1px solid var(--line);border-radius:100px;
+        color:var(--fg);background:var(--bg)}
+  .chip b{color:var(--steel);font-weight:600}
 
-      <!-- <li class="bold">
-        <a aria-label="Navigate to the Skills section" href="#skills" class="waves-effect waves-dark purple-text"><i
-            class="mdi-av-equalizer small"></i><span>Skills</span></a>
-      </li> -->
-      <!--
-        ICONS:
-        mdi-action-assessment
-        mdi-social-poll
-      -->
-      <li class="bold">
-        <a aria-label="Navigate to the Skills section" href="#skills" class="waves-effect waves-dark teal-text"><i
-            class="mdi-action-assessment small"></i><span>Skills</span></a>
-      </li>
-      <!-- <li class="bold">
-        <a aria-label="Navigate to the Awards section" href="#awards" class="waves-effect waves-dark red-text"><i
-            class="mdi-action-grade small"></i><span>Awards</span></a>
-      </li> -->
-      <li class="bold">
-        <a aria-label="Navigate to the Education section" href="#education" class="waves-effect waves-dark teal-text"><i
-            class="mdi-social-school small"></i><span>Education</span></a>
-      </li>
+  /* experience timeline */
+  .timeline{display:grid;gap:0}
+  .job{display:grid;grid-template-columns:auto 1fr;gap:1.4rem;padding-block:1.6rem;
+       border-top:1px solid var(--line-soft)}
+  .job:first-child{border-top:none}
+  .job .when{font-family:var(--f-mono);font-size:.8rem;color:var(--muted);white-space:nowrap}
+  .job h3{font-size:1.2rem}
+  .job .co{color:var(--accent);font-size:.95rem;margin-top:.15rem;font-weight:500}
+  .job ul{margin:.9rem 0 0;padding-left:1.1rem;color:var(--muted);font-size:.96rem;display:grid;gap:.35rem}
+  .job li::marker{color:var(--muted-2)}
 
-      <!-- 
-        1. mdi-communication-contacts
-        2. mdi-content-mail
-        3. mdi-communication-email
-      -->
-      <!-- <li class="bold">
-        <a aria-label="Navigate to the Contact section" href="#contact" class="waves-effect waves-dark brown-text"><i
-            class="mdi-content-mail small"></i><span>Contact</span></a>
-      </li> -->
-      <li class="bold">
-        <a aria-label="Navigate to the Contact section" href="#contact" class="waves-effect waves-dark teal-text"><i
-            class="mdi-content-mail small"></i><span>Contact</span></a>
-      </li>
+  /* projects */
+  .proj-group + .proj-group{margin-top:2.4rem}
+  .proj-group > h3{font-family:var(--f-mono);font-size:.85rem;color:var(--muted);
+                   margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
+  .proj-group > h3::after{content:"";flex:1;height:1px;background:var(--line-soft)}
+  .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;
+             background:var(--line-soft);border:1px solid var(--line-soft);border-radius:var(--radius);overflow:hidden}
+  .card{background:var(--panel);padding:1.2rem;display:flex;flex-direction:column;gap:.5rem;
+        transition:background .18s;min-width:0}
+  .card:hover{background:var(--panel-2)}
+  .card .prod{font-family:var(--f-mono);font-size:.74rem;color:var(--accent);letter-spacing:.02em}
+  .card .client{font-size:1.02rem;font-weight:600;font-family:var(--f-display);line-height:1.25}
+  .card .note{font-size:.86rem;color:var(--muted);margin-top:auto}
 
-      <!-- <li class="bold">
-        <a aria-label="Navigate to the Blog section" href="#blog"
-          class="waves-effect waves-dark yellow-text text-darken-2"><i
-            class="mdi-content-create small"></i><span>Blog</span></a>
-      </li> -->
-      <!--
-        ICONS:
-        1. mdi-action-description
-        2. mdi-file-folder
-        3. mdi-file-folder-open
-        4. mdi-file-attachment
-        5. mdi-file-folder-shared
-      -->
-      <li class="bold">
-        <a aria-label="Open Varad's resume in a new tab"
-          href="https://drive.google.com/file/d/1JK0WiDYe5uMZCtUqLfULc7L28Wrndo6n/view?usp=sharing" target="_blank"
-          class="waves-effect waves-dark teal-text"><i class="mdi-file-folder-open small"></i><span>Resume</span></a>
-      </li>
-    </ul>
-  </nav>
+  /* education */
+  .edu{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-soft);
+       border:1px solid var(--line-soft);border-radius:var(--radius);overflow:hidden}
+  .edu .item{background:var(--panel);padding:1.5rem}
+  .edu h3{font-size:1.12rem}
+  .edu .deg{color:var(--accent);font-size:.92rem;margin-top:.3rem;font-weight:500}
+  .edu .yr{font-family:var(--f-mono);font-size:.78rem;color:var(--muted);margin-top:.6rem}
+  .edu .cw{color:var(--muted);font-size:.88rem;margin-top:.8rem}
 
-  <!-- Nav class 2 -->
-  <nav class="hide-on-large only trigger z-depth-1">
-    <a aria-label="Toggle visibility of the mobile navbar" href="#" data-activates="slide-out"
-      class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-    <div class="name-title">
-      <a id="name" aria-label="Navigate to the beginning of the page" href="#" class="blue-grey-text">Varad
-        Bhogayata</a><span class="black-text light">Software Developer</span>
+  /* contact */
+  #kontak{padding-bottom:clamp(4rem,9vw,6rem)}
+  .contact-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,3.5rem);align-items:start}
+  .contact-grid h2{font-size:clamp(1.8rem,4.5vw,2.8rem);letter-spacing:-.015em}
+  .contact-grid .sub{color:var(--muted);margin-top:1rem;max-width:40ch}
+  .clist{display:grid;gap:.1rem;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  .crow{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+        padding:.95rem 1.1rem;background:var(--panel);border-bottom:1px solid var(--line-soft)}
+  .crow:last-child{border-bottom:none}
+  .crow .k{font-family:var(--f-mono);font-size:.78rem;color:var(--muted)}
+  .crow .v{display:flex;align-items:center;gap:.6rem;font-size:.92rem;min-width:0}
+  .crow .v a,.crow .v span.sel{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .crow .v a:hover{color:var(--accent)}
+  .copy{background:none;border:1px solid var(--line);color:var(--muted);cursor:pointer;
+        font-family:var(--f-mono);font-size:.7rem;padding:.25rem .5rem;border-radius:var(--radius);flex:none}
+  .copy:hover{color:var(--fg);border-color:var(--muted-2)}
+  .copy.done{color:var(--ok);border-color:var(--ok)}
+
+  footer{border-top:1px solid var(--line-soft);padding-block:2rem;color:var(--muted-2);
+         font-family:var(--f-mono);font-size:.78rem;display:flex;justify-content:space-between;
+         gap:1rem;flex-wrap:wrap}
+
+  @media(max-width:860px){
+    .hero{grid-template-columns:1fr}
+    .portrait{max-width:240px;order:-1}
+    .about-grid,.contact-grid{grid-template-columns:1fr}
+    .stacks{grid-template-columns:1fr}
+    .edu{grid-template-columns:1fr}
+  }
+  @media(max-width:620px){
+    .nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;
+               gap:0;background:var(--bg);border-bottom:1px solid var(--line);
+               padding:.4rem var(--gutter);display:none}
+    .nav-links.open{display:flex}
+    .nav-links a{padding:.7rem .4rem;border-bottom:1px solid var(--line-soft)}
+    .nav-toggle{display:inline-block}
+    .job{grid-template-columns:1fr;gap:.5rem}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><span class="dot"></span><b>ezhar</b>savero<span style="color:var(--muted-2)">.io</span></a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="menu">menu</button>
+    <div class="nav-links" id="menu">
+      <a href="#tentang">Tentang</a>
+      <a href="#keahlian">Keahlian</a>
+      <a href="#pengalaman">Pengalaman</a>
+      <a href="#proyek">Proyek</a>
+      <a href="#pendidikan">Pendidikan</a>
+      <a href="#kontak">Kontak</a>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <!-- Nav class 3 -->
-  <nav class="hide-on-large only">
-    <ul id="slide-out" class="side-nav">
+<main id="top">
+  <div class="wrap">
 
-      <li class="bold">
-        <a aria-label="Navigate to the About section" href="#about" class="waves-effect waves-dark teal-text"><i
-            class="mdi-social-person small"></i><span>About</span></a>
-      </li>
-      <li class="bold">
-        <a aria-label="Navigate to the Experience section" href="#experience"
-          class="waves-effect waves-dark teal-text"><i
-            class="mdi-action-trending-up small"></i><span>Experience</span></a>
-      </li>
-      <li class="bold">
-        <a aria-label="Navigate to the Projects section" href="#projects" class="waves-effect waves-dark teal-text"><i
-            class="mdi-av-my-library-books small"></i><span>Projects</span></a>
-      </li>
-      <li class="bold">
-        <a aria-label="Navigate to the Skills section" href="#skills" class="waves-effect waves-dark teal-text"><i
-            class="mdi-action-assessment small"></i><span>Skills</span></a>
-      </li>
-      <!-- <li class="bold">
-        <a aria-label="Navigate to the Awards section" href="#awards" class="waves-effect waves-dark red-text"><i
-            class="mdi-action-grade small"></i><span>Awards</span></a>
-      </li> -->
-      <li class="bold">
-        <a aria-label="Navigate to the Education section" href="#education" class="waves-effect waves-dark teal-text"><i
-            class="mdi-social-school small"></i><span>Education</span></a>
-      </li>
-      <!-- <li class="bold">
-        <a aria-label="Navigate to the Contact section" href="#contact" class="waves-effect waves-dark brown-text"><i
-            class="mdi-content-mail small"></i><span>Contact</span></a>
-      </li> -->
-      <li class="bold">
-        <a aria-label="Navigate to the Contact section" href="#contact" class="waves-effect waves-dark teal-text"><i
-            class="mdi-communication-contacts small"></i><span>Contact</span></a>
-      </li>
+    <!-- HERO -->
+    <header class="hero">
+      <div>
+        <span class="tag"><span class="live"></span>Tersedia untuk proyek &amp; kolaborasi</span>
+        <h1>Ezhar Savero&nbsp;R.</h1>
+        <div class="role">System Engineer · Red Hat &amp; Dell Infrastructure</div>
+        <p class="lede">Membangun dan merawat infrastruktur enterprise — dari server &amp; storage sampai platform Linux terkelola. Berbasis di Jakarta.</p>
+        <div class="cta">
+          <a class="btn primary" href="mailto:ezhar.savero@virtusindonesia.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            Hubungi saya
+          </a>
+          <a class="btn" href="https://www.linkedin.com/in/ezharsavero" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5 2.5 2.5 0 0 0 4.98 3.5M3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.82-2.05 3.75-2.05C20.4 8.65 22 10.9 22 14.6V21h-4v-5.6c0-1.34-.02-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96V21H9z"/></svg>
+            LinkedIn
+          </a>
+          <a class="btn" href="https://github.com/ezharsavero" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48l-.01-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.39.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.86l-.01 2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2"/></svg>
+            GitHub
+          </a>
+          <a class="btn" href="https://ezharsavero.github.io/assets/resume/resume.pdf" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>
+            Resume
+          </a>
+        </div>
+      </div>
+      <div class="portrait">
+        <img src="assets/img/ezhar.jpg" alt="Potret Ezhar Savero R." width="900" height="1500" loading="eager">
+        <span class="badge">System Engineer</span>
+      </div>
+    </header>
 
+    <!-- ABOUT -->
+    <section id="tentang">
+      <div class="sec-head"><h2>Tentang saya</h2><span class="meta">// profil</span></div>
+      <div class="about-grid">
+        <div>
+          <p>Lulusan Teknik Telekomunikasi yang fokus di dunia infrastruktur enterprise. Saya mengerjakan implementasi, proof-of-concept, dan dukungan teknis untuk produk Red Hat dan Dell — dari perencanaan sampai serah terima ke pelanggan.</p>
+          <p>Tipe yang cepat belajar dan senang mengutak-atik teknologi baru untuk memecahkan masalah nyata. Setiap pekerjaan saya kerjakan dengan usaha penuh, entah itu deployment OpenShift skala besar atau pemasangan storage di ruang data center.</p>
+        </div>
+        <div class="facts">
+          <div class="fact"><span>Peran</span><span>System Engineer</span></div>
+          <div class="fact"><span>Lokasi</span><span>Jakarta, Indonesia</span></div>
+          <div class="fact"><span>Fokus</span><span>RHEL · OpenShift · OpenStack</span></div>
+          <div class="fact"><span>Hardware</span><span>Dell Server &amp; Storage</span></div>
+          <div class="fact"><span>Sertifikasi</span><span>RHCSA</span></div>
+          <div class="fact"><span>Pengalaman</span><span>Sejak 2018</span></div>
+        </div>
+      </div>
+    </section>
 
-      <!-- <li class="bold">
-        <a aria-label="Navigate to the Contact section" href="#blog"
-          class="waves-effect waves-dark yellow-text text-dark-3"><i
-            class="mdi-content-mail small"></i><span>Blog</span></a>
-      </li> -->
-      <li class="bold">
-        <a aria-label="Open Varad's Resume in a new tab"
-          href="https://drive.google.com/file/d/1JK0WiDYe5uMZCtUqLfULc7L28Wrndo6n/view?usp=sharing" target="_blank"
-          class="waves-effect waves-dark teal-text"><i class="mdi-file-folder-open small"></i><span>Resume</span></a>
-      </li>
-    </ul>
-  </nav>
-
-  <!-- Main Content-->
-  <main>
-    <!-- First Section: Heading lines and image -->
-    <section id="intro" class="section scrollspy full-height">
-      <div class="overlay"></div>
-      
-
-      <!-- <div style="display: block; margin-left: 0em; margin-top: 3 rem !important;">
-        <h6>Welcome to my Client template</h6>
-        <h2>Hello <span>I'm John Watson</span></h2>
-        <h4>designer - developer - freelancer</h4>
-        <p class="mt-4"> Auctor sit amet aliquam vel, ullamcorper sit amet ligula.
-          Vivamus suscipit tortor eget felis porttitor volutpat. Mauris blandit aliquet elit.</p>
-        <ul class="social_section_1info mt-4">
-          <li class="mb-2 facebook"><a href="#"><span class="fa fa-facebook"></span></a></li>
-          <li class="mb-2 twitter"><a href="#"><span class="fa fa-twitter"></span></a></li>
-          <li class="linkedin"><a href="#"><span class="fa fa-linkedin"></span></a></li>
-          <li class="pinterest"><a href="#"><span class="fa fa-pinterest"></span></a></li>
-        </ul>
-        <a href="#about" class="scroll bnr-btn mr-2">Read more </a>
-        <a href="#contact" class="scroll bnr-btn1">Contact Me </a>
-      </div> -->
-
-      <div class="container">
-        <div class="col-md-9">
-          <div class="content section-padding valign" style="margin-left: 100px; margin-top: 50px;">
-            <div class="caption">
-              <h2>Hi, I'm <span class="teal">Varad Bhogayata.</span></h2>
-              <h5><span style="color: #00796b !important;">A</span>
-                <span>Software Developer with bent on AI.</span>
-              </h5>
-              <p>Small description here...</p>
-              
-              <!-- <div class="social-panel-container" style="position: fixed;
-              right: 0;
-              bottom: 80px;
-              /* transform: translateX(100%); */
-              transition: transform 0.4s ease-in-out;">
-                <div class="social-panel" style="
-                /* box-shadow: 0 16px 31px -17px rgba(0, 31, 97, 0.6); */
-                /* border: 5px solid #001f61; */
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                font-family: 'Muli';
-                position: relative;
-                height: 169px;
-                width: 370px;
-                max-width: calc(100% - 10px);">
-                  
-                  <ul>
-                    <li>
-                      <a href="https://twitter.com/florinpop1705" target="_blank">
-                        <i class="fa fa-twitter"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="https://instagram.com/florinpop17" target="_blank">
-                        <i class="fa fa-instagram"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="https://facebook.com/florinpop17" target="_blank">
-                        <i class="fa fa-facebook"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="https://linkedin.com/in/florinpop17" target="_blank">
-                        <i class="fa fa-linkedin"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-               -->
-
-              
-              
-              
-            </div>
-            <div class="social">
-              <button class="icon-btn linkedin"> 
-                <i class="fa fa-linkedin"></i>
-              </button>
-              <button class="icon-btn github"> 
-                <i class="fa fa-github"></i>
-              </button>
-              <button class="icon-btn angellist"> 
-                <i class="fa fa-angellist"></i>
-              </button>
-            </div>
-            <div class='buttons'>
-              <a href="#about" class="readme">Read More</a>
-            
-            <a href="#contact" class="contactme">Contact Me</a>
-            </div>
-            
-            
-
+    <!-- SKILLS -->
+    <section id="keahlian">
+      <div class="sec-head"><h2>Keahlian &amp; tech stack</h2><span class="meta">// toolbox</span></div>
+      <div class="stacks">
+        <div class="stack">
+          <h3>Platform Red Hat</h3>
+          <div class="chips">
+            <span class="chip">Enterprise Linux</span><span class="chip">OpenShift</span>
+            <span class="chip">OpenStack</span><span class="chip">Satellite</span>
+            <span class="chip">Ansible Automation</span>
+          </div>
+        </div>
+        <div class="stack">
+          <h3>Infrastruktur Dell</h3>
+          <div class="chips">
+            <span class="chip">PowerEdge Server</span><span class="chip">Isilon / PowerScale</span>
+            <span class="chip">Unity Storage</span><span class="chip">Data Domain</span>
+            <span class="chip">NAS</span>
+          </div>
+        </div>
+        <div class="stack">
+          <h3>Scripting &amp; web</h3>
+          <div class="chips">
+            <span class="chip">Shell Scripting</span><span class="chip">HTML5</span>
+            <span class="chip">Linux CLI</span>
+          </div>
+        </div>
+        <div class="stack">
+          <h3>Sertifikasi</h3>
+          <div class="chips">
+            <span class="chip"><b>RHCSA</b> — Red Hat Certified System Administrator</span>
           </div>
         </div>
       </div>
-
-      
-
-          
     </section>
 
-
-    <!-- Second Section: About -->
-    <section id="about" class="section scrollspy">
-      <h3 class="page-title white-text teal">About</h3>
-      <div class="container flow-text">
-        <blockquote>
-          <h2>
-            Mission-driven Software Developer with a passion for Artificial Intelligence and Web Development.
-          </h2>
-        </blockquote>
-        <p>
-          About Me.
-        </p>
-        <p>
-          Another Paragraph
-        </p>
-        <!-- <p>
-        <strong>Current Focus</strong>:&nbsp;<a aria-label="Navigate to the Inclusive Design Patterns homepage"
-          href="https://www.smashingmagazine.com/inclusive-design-patterns/">Accessibility</a>&nbsp;//&nbsp;<a
-          aria-label="Navigate to the Full Stack React homepage"
-          href="https://www.fullstackreact.com/">React</a>&nbsp;//&nbsp;<a
-          aria-label='Navigate to the article "Scalable CSS"'
-          href="https://mrmrs.github.io/writing/2016/03/24/scalable-css/">Design Systems</a>
-      </p> -->
-      </div>
-    </section>
-
-
-    <!-- Third Section: Experience -->
-    <section id="experience" class="section scrollspy">
-      <h3 class="page-title white-text teal">Experience</h3>
-      <div class="container">
-
-        <!-- Latest Experience -->
-        <div class="card">
-          <div class="card-content">
-            <div class="row">
-              <div class="col s12 m2">
-                <a href="https://www.meditab.com" target="_blank"><img alt="Meditab logo"
-                    src="/assets/img/exp-meditab-logo-500x500.jpg" class="responsive-img center-block" /></a>
-              </div>
-              <!-- <div class="col s12 m10"> -->
-              <div class="col s12 m10">
-                <p>
-                  <span class="card-title"><a href="http://meditab.com" target="_blank"
-                      class="teal-text hoverline">Meditab</a></span>
-                </p>
-              </div>
-            </div>
-            <div class="role brown-text text-darken-2">AI Developer</div>
+    <!-- EXPERIENCE -->
+    <section id="pengalaman">
+      <div class="sec-head"><h2>Pengalaman</h2><span class="meta">// 2 posisi</span></div>
+      <div class="timeline">
+        <article class="job">
+          <div class="when">Mar 2022 —<br>Sekarang</div>
+          <div>
+            <h3>System Engineer</h3>
+            <div class="co"><a href="https://virtusindonesia.com" target="_blank" rel="noopener">Virtus Technology Indonesia</a> · Jakarta</div>
             <ul>
-              <li>
-                Improved an in-production optimization algorithm which reduced the cycle-time of the automation process.
-              </li>
-              <li>
-                Expanded and modularized the algorithm from one system one robot to a multi-system multi-robot paradigm.
-              </li>
-              <li>
-                Designed and developed a Video Analytics application that tracks the activity and location of each human
-                in a multi-camera environment
-                along with detailed visualization - from scratch.
-              </li>
-              <li>Improved the speed of the Video Analytics application by incorporating the YOLOv3 model for object
-                detection and DeepSORT for
-                multi-object tracking.</li>
-              <li>
-                <b>Tools:</b> Python, OpenCV, Keras, Tensorflow, PyTorch
-              </li>
+              <li>Delivery implementasi, proof-of-concept, dan dukungan teknis untuk produk Red Hat &amp; Dell.</li>
+              <li>Presentasi solusi, training, serta hands-on konfigurasi di sisi pelanggan.</li>
+              <li>Menangani deployment platform Linux terkelola dan infrastruktur server &amp; storage.</li>
             </ul>
           </div>
-          <div class="card-action">
-            <span>Dec 2018 - July 2019 | Ahmedabad, India</span>
-          </div>
-        </div>
-
-        <!-- Experience 2 -->
-        <div class="card">
-          <div class="card-content">
-            <div class="row">
-              <div class="col s12 m2">
-                <a href="https://www.mtag.in" target="_blank"><img alt="Mtag logo"
-                    src="/assets/img/exp-mtag-logo-500x500.jpg" class="responsive-img center-block" /></a>
-
-              </div>
-
-              <!-- <div class="col s12 m10"> -->
-              <div class="col s12 m10">
-                <p>
-                  <span class="card-title"><a href="https://www.mtag.in" target="_blank"
-                      class="teal-text hoverline">Mtag
-                      Innovations</a></span>
-                </p>
-              </div>
-            </div>
-            <div class="role brown-text text-darken-2">Data Scientist</div>
+        </article>
+        <article class="job">
+          <div class="when">Okt 2018 —<br>Feb 2022</div>
+          <div>
+            <h3>IT Support</h3>
+            <div class="co"><a href="https://arthawena.com" target="_blank" rel="noopener">Arthawenasakti Gemilang</a> · Tangerang</div>
             <ul>
-              <li>
-                Developed a cloud-based data visualization and analytics web application aimed at storing and
-                visualizing
-                data-points of each IoT devices.
-              </li>
-              <li>
-                Designed and implemented a stacking model predicting the degradation of drugs and achieved 75% - 83%
-                accuracy depending on the data
-                for each drug.
-              </li>
-              <li>
-                <b>Tools:</b> Python, IBM Cloud, Node Red, Flask
-              </li>
+              <li>Mengelola pengguna komputer, jaringan LAN, dan wireless access point (Netgear).</li>
+              <li>Instalasi &amp; pemeliharaan CCTV (Hikvision) dan administrasi Linux Mint.</li>
+              <li>Memberikan pelatihan software untuk pengguna internal.</li>
             </ul>
           </div>
-          <div class="card-action">
-            <span>July 2018 - Nov 2018 | Ahmedabad, India</span>
-          </div>
-        </div>
-
-        <!-- Experience 3 -->
-        <div class="card">
-          <div class="card-content">
-            <div class="row">
-              <div class="col s12 m2">
-                <a href="https://www.cignex.com" target="_blank"><img alt="Cignex logo"
-                    src="/assets/img/exp-cignex-logo.png" class="responsive-img center-block" /></a>
-              </div>
-              <!-- <div class="col s12 m10"> -->
-              <div class="col s12 m10">
-                <p>
-                  <span class="card-title"><a href="https://www.cignex.com" target="_blank"
-                      class="teal-text hoverline">CIGNEX
-                      Datamatics </a></span>
-                </p>
-              </div>
-            </div>
-            <div class="role brown-text text-darken-2">Project Trainee</div>
-            <ul>
-              <li>
-                Designed a library management system for a local library, where we undertook activities like requirement
-                elicitation, preparing Data Flow
-                and Entity-Relationship diagrams.
-              </li>
-              <li>
-                Delivered a solution for a POC involving Automatic Financial Document Classifier using Natural Language
-                Processing and Support Vector
-                Machines with 96% accuracy on the company’s data.
-              </li>
-              <li>
-                <b>Tools:</b> Python, Scikit-learn, NLTK
-              </li>
-            </ul>
-          </div>
-          <div class="card-action">
-            <span>June 2017 - July 2017 | Ahmedabad, India</span>
-          </div>
-        </div>
-
+        </article>
       </div>
     </section>
 
-    <!-- Fourth Section: Projects -->
-    <section id="projects" class="section scrollspy">
-      <h3 class="page-title white-text teal">Projects</h3>
-      <div class="container">
-        <div class="row">
-          <!-- 1. Django Project -->
-          <div class="col s12 m6 l6">
-            <div class="card medium">
-              <div class="card-image waves-effect waves-block waves-light">
-                <img alt="django web app" src="/assets/img/project-python-django4.jpg" class="activator" />
-              </div>
-              <div class="card-content">
-                <span class="card-title activator teal-text hoverline">Django Project<i
-                    class="mdi-navigation-more-vert right"></i></span>
-                <p>
-                  Django based To-do app.
-                </p>
-              </div>
-              <div class="card-reveal">
-                <!-- TODO: change this -- only close button -->
-                <!-- <span class="card-title brown-text">Accomplishments<i class="mdi-navigation-close right"></i></span> -->
-                <span class="card-title grey-text"><small>Accomplishments</small><i
-                    class="mdi-navigation-close right"></i></span>
-                <ul>
-                  <li></li>
-                  <li></li>
+    <!-- PROJECTS -->
+    <section id="proyek">
+      <div class="sec-head"><h2>Proyek pilihan</h2><span class="meta">// deployment lapangan</span></div>
 
-                </ul>
-                <div class="card-action">
-                  <a aria-label="Visit Code Island website" href="http://google.com" target="_blank" data-position="top"
-                    data-tooltip="View Online"
-                    class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i
-                      class="fa fa-external-link"></i></a>
-                  <a aria-label="Visit the GitHub repo for Interpol8r project" href="https://github.com/varadbhogayata/"
-                    target="_blank" data-position="top" data-tooltip="View Source"
-                    class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i
-                      class="fa fa-github"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="proj-group">
+        <h3>Red Hat</h3>
+        <div class="proj-grid">
+          <div class="card"><span class="prod">OpenShift</span><span class="client">Bareskrim Polri</span><span class="note">Implementasi platform container OpenShift.</span></div>
+          <div class="card"><span class="prod">Satellite</span><span class="client">Bank BTN</span><span class="note">Implementasi manajemen patch &amp; lifecycle.</span></div>
+          <div class="card"><span class="prod">OpenStack</span><span class="client">Ditjen Pajak</span><span class="note">Pengelolaan layanan private cloud OpenStack.</span></div>
+          <div class="card"><span class="prod">CentOS</span><span class="client">Bank BNC</span><span class="note">Instalasi &amp; konfigurasi sistem operasi.</span></div>
+        </div>
+      </div>
 
-          <!-- Flask Project -->
-          <div class="col s12 m6 l6">
-            <div class="card medium">
-              <div class="card-image waves-effect waves-block waves-light">
-                <img alt="Screenshot of Interpol8r web app" src="/assets/img/project-python-flask2.jpg"
-                  class="activator" />
-              </div>
-              <div class="card-content">
-                <span class="card-title activator teal-text hoverline">Flask Project<i
-                    class="mdi-navigation-more-vert right"></i></span>
-                <p>
-                  A Flask based Blog
-                </p>
-              </div>
-              <div class="card-reveal">
-                <!-- TODO: change this -- only close button -->
-                <!-- <span class="card-title brown-text">Accomplishments<i class="mdi-navigation-close right"></i></span> -->
-                <span class="card-title brown-text"><small>Accomplishments</small><i
-                    class="mdi-navigation-close right"></i></span>
-                <ul>
-                  <li></li>
-                  <li></li>
-
-
-                </ul>
-                <div class="card-action">
-                  <a aria-label="Visit Code Island website" href="http://google.com" target="_blank" data-position="top"
-                    data-tooltip="View Online"
-                    class="btn-floating btn-large waves-effect waves-light brown tooltipped"><i
-                      class="fa fa-external-link"></i></a>
-                  <a aria-label="Visit the GitHub repo for Interpol8r project" href="https://github.com/varadbhogayata/"
-                    target="_blank" data-position="top" data-tooltip="View Source"
-                    class="btn-floating btn-large waves-effect waves-light brown tooltipped"><i
-                      class="fa fa-github"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- VQA -->
-          <div class="col s12 m6 l6">
-            <div class="card medium">
-              <div class="card-image waves-effect waves-block waves-light">
-                <img alt="Screenshot of Interpol8r web app" src="/assets/img/project-ai-1.jpg" class="activator" />
-              </div>
-              <div class="card-content">
-                <span class="card-title activator teal-text hoverline">Visual Question Answering<i
-                    class="mdi-navigation-more-vert right"></i></span>
-                <p>
-                  An attention-based classification model that aims at generating an answer for a given input image.
-                </p>
-              </div>
-              <div class="card-reveal">
-                <!-- TODO: change this -- only close button -->
-                <!-- <span class="card-title brown-text">Accomplishments<i class="mdi-navigation-close right"></i></span> -->
-                <span class="card-title brown-text"><small>Accomplishments</small><i
-                    class="mdi-navigation-close right"></i></span>
-                <ul>
-                  <li>Incorporated Convolution Neural Networks (CNN) for extracting image features and Long Short Term
-                    Memory for extracting question
-                    embeddings.</li>
-                  <li>Tested the model on the COCO dataset, abstract scenes images, and got 69% overall accuracy on the
-                    VQA evaluation metric.</li>
-
-                </ul>
-                <div class="card-action">
-                  <a aria-label="Visit the GitHub repo for Interpol8r project"
-                    href="https://github.com/varadbhogayata/visual-question-answering" target="_blank"
-                    data-position="top" data-tooltip="View Source"
-                    class="btn-floating btn-large waves-effect waves-light brown tooltipped"><i
-                      class="fa fa-github"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Video Summarizer -->
-          <div class="col s12 m6 l6">
-            <div class="card medium">
-              <div class="card-image waves-effect waves-block waves-light">
-                <img alt="Screenshot of Interpol8r web app" src="/assets/img/project-AI.jpg" class="activator" />
-              </div>
-              <div class="card-content">
-                <span class="card-title activator teal-text hoverline">Video Summarizer<i
-                    class="mdi-navigation-more-vert right"></i></span>
-                <p>
-                  A Seq2Seq model that generates a short summary of the given input video.
-                </p>
-              </div>
-              <div class="card-reveal">
-                <!-- TODO: change this -- only close button -->
-                <!-- <span class="card-title brown-text">Accomplishments<i class="mdi-navigation-close right"></i></span> -->
-                <span class="card-title brown-text"><small>Accomplishments</small><i
-                    class="mdi-navigation-close right"></i></span>
-                <ul>
-                  <li>Incorporated CNN to detect and classify objects in the video frames and Long Short Term Memory for
-                    generating a summary.</li>
-                  <li>Evaluated the model on MSVD (Microsoft Video Description Corpus) dataset; achieved 0.77, 0.71,
-                    0.52 scores respectively on ROGUE,
-                    BLEU, METEOR evaluation metrics.</li>
-
-                </ul>
-                <!-- TODO: UPLOAD THIS PROJECT ON GITHUB -->
-                <div class="card-action">
-                  <a aria-label="Visit the GitHub repo for Interpol8r project" href="https://github.com/varadbhogayata/"
-                    target="_blank" data-position="top" data-tooltip="View Source"
-                    class="btn-floating btn-large waves-effect waves-light brown tooltipped"><i
-                      class="fa fa-github"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Image Generator -->
-          <div class="col s12 m6 l6">
-            <div class="card medium">
-              <div class="card-image waves-effect waves-block waves-light">
-                <img alt="Screenshot of Interpol8r web app" src="/assets/img/project-ai-1.jpg" class="activator" />
-              </div>
-              <div class="card-content">
-                <span class="card-title activator teal-text hoverline">Image Generator<i
-                    class="mdi-navigation-more-vert right"></i></span>
-                <p>
-                  An image generator based on the concept of adversarial networks (GANs)
-                </p>
-              </div>
-              <div class="card-reveal">
-                <!-- TODO: change this -- only close button -->
-                <!-- <span class="card-title brown-text">Accomplishments<i class="mdi-navigation-close right"></i></span> -->
-                <span class="card-title brown-text"><small>Accomplishments</small><i
-                    class="mdi-navigation-close right"></i></span>
-                <ul>
-                  <li>Developed system was tested on a human-face database and loss was calculated by comparing the PCAs
-                    of generated and original image.</li>
-                  <li>Calculated difference in PCA was less than 10%, depicting the successful generation of an image by
-                    the generator.</li>
-
-                </ul>
-                <div class="card-action">
-                  <a aria-label="Visit the GitHub repo for Interpol8r project" href="https://github.com/varadbhogayata/"
-                    target="_blank" data-position="top" data-tooltip="View Source"
-                    class="btn-floating btn-large waves-effect waves-light brown tooltipped"><i
-                      class="fa fa-github"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Head Counting System -->
-          <div class="col s12 m6 l6">
-            <div class="card medium">
-              <div class="card-image waves-effect waves-block waves-light">
-                <img alt="Screenshot of Interpol8r web app" src="/assets/img/project-ai-1.jpg" class="activator" />
-              </div>
-              <div class="card-content">
-                <span class="card-title activator teal-text hoverline">Head Counting System<i
-                    class="mdi-navigation-more-vert right"></i></span>
-                <p>
-                  A system that calculates the attendance of the class from a panoramic image of a live classroom.
-                </p>
-              </div>
-              <div class="card-reveal">
-                <!-- TODO: change this -- only close button -->
-                <!-- <span class="card-title brown-text">Accomplishments<i class="mdi-navigation-close right"></i></span> -->
-                <span class="card-title brown-text"><small>Accomplishments</small><i
-                    class="mdi-navigation-close right"></i></span>
-                <ul>
-                  <li>Used Singular Value Decomposition for image compression; applied various image processing
-                    techniques and morphological operations to
-                    detect the number of heads.</li>
-
-                </ul>
-                <div class="card-action">
-                  <a aria-label="Visit the GitHub repo for Interpol8r project"
-                    href="https://github.com/varadbhogayata/visual-question-answering" target="_blank"
-                    data-position="top" data-tooltip="View Source"
-                    class="btn-floating btn-large waves-effect waves-light brown tooltipped"><i
-                      class="fa fa-github"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ************* -->
+      <div class="proj-group">
+        <h3>Dell</h3>
+        <div class="proj-grid">
+          <div class="card"><span class="prod">PowerEdge R650</span><span class="client">XL Cibitung</span><span class="note">Instalasi server produksi.</span></div>
+          <div class="card"><span class="prod">PowerEdge R750</span><span class="client">Telkom</span><span class="note">Instalasi server compute.</span></div>
+          <div class="card"><span class="prod">Isilon</span><span class="client">Kementerian Agama</span><span class="note">Instalasi scale-out storage.</span></div>
+          <div class="card"><span class="prod">NAS &amp; Unity</span><span class="client">Mubadala</span><span class="note">Instalasi storage terpadu.</span></div>
+          <div class="card"><span class="prod">Data Domain</span><span class="client">BCA</span><span class="note">Instalasi storage backup &amp; dedup.</span></div>
         </div>
       </div>
     </section>
 
-    <!-- Fifth Section: Skills -->
-    <section id="skills" class="section scrollspy">
-      <h3 class="page-title white-text teal">Skills</h3>
-      <div class="container">
-        <!-- Languages and Databases -->
-        <div class="card">
-          <div class="card-content">
-            <h4 class="brown-text light">Languages and Databases</h4>
-            <div class="row text-center">
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/python-logo-1-300x300.jpg" class="responsive-img" />Python
-              </div>
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/mysql-logo-1-300x300.jpg" class="responsive-img" />MySQL
-              </div>
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/html5-300x300.jpg" class="responsive-img" />HTML5
-              </div>
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/css3-300x300.jpg" class="responsive-img" />CSS3
-              </div>
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/shell-logo-1-300x300.jpg" class="responsive-img" />Shell Scripting
-              </div>
-              <!-- <div class="col s4 m2">
-                <img alt="" src="/assets/img/jade.png" class="responsive-img" />Jade
-              </div>
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/jekyll.png" class="responsive-img" />Jekyll
-              </div> -->
-            </div>
-          </div>
+    <!-- EDUCATION -->
+    <section id="pendidikan">
+      <div class="sec-head"><h2>Pendidikan</h2><span class="meta">// riwayat</span></div>
+      <div class="edu">
+        <div class="item">
+          <h3>Politeknik Negeri Malang</h3>
+          <div class="deg">S.Tr. Teknik Telekomunikasi · IPK 3.49 / 4.0</div>
+          <div class="yr">Malang, Indonesia</div>
+          <p class="cw">Komunikasi Data berbasis Mikrokontroler, Teknologi Wireless &amp; Seluler, Pemrograman berbasis Internet.</p>
         </div>
-
-        <div class="card">
-          <div class="card-content">
-            <h4 class="brown-text light">Libraries</h4>
-            <div class="row text-center">
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/numpy-logo-1-500x500.jpg" class="responsive-img" />NumPy
-              </div>
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/pandas-logo-2-500x500.jpg" class="responsive-img" />Pandas
-              </div>
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/opencv-logo-1-500x500.jpg" class="responsive-img" />OpenCV
-              </div>
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/sk-learn-logo-1-500x500.jpg" class="responsive-img" />scikit-learn
-              </div>
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/matplotlib-logo-1-500x500.jpg" class="responsive-img" />matplotlib
-              </div>
-            </div>
-          </div>
+        <div class="item">
+          <h3>SMK Negeri 8 Malang</h3>
+          <div class="deg">Teknik Komputer &amp; Jaringan</div>
+          <div class="yr">Malang, Indonesia</div>
+          <p class="cw">Algoritma &amp; Pemrograman, Sistem Jaringan, Sistem Operasi.</p>
         </div>
-
-        <!-- Frameworks -->
-        <div class="card">
-          <div class="card-content">
-            <h4 class="brown-text light">Frameworks</h4>
-            <div class="row text-center">
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/django-logo.webp" class="responsive-img" />Django
-              </div>
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/flask-logo.png" class="responsive-img" />Flask
-              </div>
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/bootstrap.png" class="responsive-img" />Bootstrap
-              </div>
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/keras-logo.png" class="responsive-img" />Keras
-              </div>
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/tensorflow-logo-1.png" class="responsive-img" />TensorFlow
-              </div>
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/pytorch-logo.png" class="responsive-img" />PyTorch
-              </div>
-
-              <!-- <div class="col s4 m2">
-                <img alt="" src="/assets/img/ionic.png" class="responsive-img" />Ionic
-              </div> -->
-            </div>
-          </div>
-        </div>
-
-        <!-- Other -->
-        <div class="card">
-          <div class="card-content">
-            <h4 class="brown-text light">Other</h4>
-            <div class="row text-center">
-
-
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/github.png" class="responsive-img" />GitHub
-              </div>
-              <div class="col s4 m2">
-                <img alt="" src="/assets/img/heroku.png" class="responsive-img" />Heroku
-              </div>
-              <!-- <div class="col s4 m2">
-                <img alt="" src="/assets/img/mongodb.png" class="responsive-img" />MongoDB
-              </div> -->
-            </div>
-          </div>
-        </div>
-
-        <!-- certifications -->
-        <div class="card">
-          <div class="card-content">
-            <h4 class="brown-text light">Certificates</h4>
-            <div class="row text-left">
-              <div class="container">
-                <div class="row">
-                  <!-- Course 1 -->
-                  <div class="col s12 m6 l6">
-                    <div class="card">
-                      <div class="card-image">
-                        <img src="/assets/img/mooc-machine-learning-coursera-800x500.jpg">
-                        <!-- <span class="card-title">Card Title</span> -->
-                      </div>
-                      <div class="card-content">
-                        <span class="card-title teal-text">Machine Learning (Stanford)</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Course 1 -->
-                  <div class="col s12 m6 l6">
-                    <div class="card">
-                      <div class="card-image">
-                        <img src="/assets/img/mooc-algorithms-stanford-2-800x500.jpg">
-                        <!-- <span class="card-title">Card Title</span> -->
-                      </div>
-                      <div class="card-content">
-                        <span class="card-title teal-text">Algorithms (Stanford)</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </section>
 
-    <!-- Sixth Section: Awards -->
-    <!-- <section id="awards" class="section scrollspy">
-      <h3 class="page-title white-text teal">Awards</h3>
-      <div class="container">
-        <div class="row">
-          <div class="col s12 m6">
-            <div class="card">
-              <div class="card-content">
-                <p>
-                  <span class="card-title"><a href="http://startupinstitute.com" target="_blank"
-                      class="teal-text hoverline">Student Choice Award</a></span>
-                </p>
-                <p class="brown-text">
-                  Startup Institute - Full Time Web Development | April 2017
-                </p>
-                <ul>
-                  <li>
-                    Awarded by students in the Full-Time Web Development track
-                    to one instructor as recognition for "outstanding
-                    teaching, listening, mentoring."
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col s12 m6">
-            <div class="card">
-              <div class="card-content">
-                <p>
-                  <span class="card-title"><a href="https://meditab.com" target="_blank"
-                      class="teal-text hoverline">Inspired By You Award</a></span>
-                </p>
-                <p class="brown-text">Meditab | June 2016</p>
-                <ul>
-                  <li>
-                    Quarterly award given to a team member who exemplifies
-                    Meditab's purpose, vision, and values, goes above and
-                    beyond in their role to make a particularly positive
-                    impact on the company.
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+    <!-- CONTACT -->
+    <section id="kontak">
+      <div class="contact-grid">
+        <div>
+          <h2>Mari terhubung.</h2>
+          <p class="sub">Terbuka untuk peluang System Engineer, konsultasi infrastruktur, atau sekadar ngobrol soal Red Hat dan data center. Silakan hubungi lewat kanal di samping.</p>
         </div>
-        <div class="row">
-          <div class="col s12 m6">
-            <div class="card">
-              <div class="card-content">
-                <p>
-                  <span class="card-title"><a href="http://startupinstitute.com" target="_blank"
-                      class="teal-text hoverline">Owl Award</a></span>
-                </p>
-                <p class="brown-text">Startup Institute | April 2016</p>
-                <ul>
-                  <li>
-                    Given to an alumnus who "continually gives back to the
-                    Startup Institute community with true humility, despite
-                    everyone knowing how awesome he is."
-                  </li>
-                </ul>
-              </div>
-            </div>
+        <div class="clist">
+          <div class="crow">
+            <span class="k">email</span>
+            <span class="v"><a href="mailto:ezhar.savero@virtusindonesia.com" class="sel">ezhar.savero@virtusindonesia.com</a>
+              <button class="copy" data-copy="ezhar.savero@virtusindonesia.com">salin</button></span>
           </div>
-          <div class="col s12 m6">
-            <div class="card">
-              <div class="card-content">
-                <p>
-                  <span class="card-title"><a href="http://www.rhdri.org" class="teal-text hoverline">Honorable
-                      Mention</a></span>
-                </p>
-                <p class="brown-text">
-                  West Philly Homebrew Competition | May 2013
-                </p>
-                <ul>
-                  <li>
-                    Neightborhood beer enthusiasts voted on their favorite
-                    local home-brewed beer. “Goldilocks" won in the "People's
-                    Choice" category.
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <div class="crow">
+            <span class="k">telepon</span>
+            <span class="v"><a href="tel:+6282113146330" class="sel">+62 821 1314 6330</a>
+              <button class="copy" data-copy="+6282113146330">salin</button></span>
           </div>
-        </div>
-        <div class="row">
-          <div class="col s12 m6">
-            <div class="card">
-              <div class="card-content">
-                <p>
-                  <span class="card-title"><a
-                      href="https://www.sas.upenn.edu/news/congratulations-our-dean%E2%80%99s-scholars" target="_blank"
-                      class="teal-text hoverline">Dean's Scholar</a></span>
-                </p>
-                <p class="brown-text">
-                  University of Pennsylvania | April 2013
-                </p>
-                <ul>
-                  <li>
-                    One of only 20 students in the School of Arts &amp;
-                    Sciences nominated by faculty for "outstanding academic
-                    achievement and intellectual promise."
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <div class="crow">
+            <span class="k">linkedin</span>
+            <span class="v"><a href="https://www.linkedin.com/in/ezharsavero" target="_blank" rel="noopener">in/ezharsavero</a></span>
           </div>
-          <div class="col s12 m6">
-            <div class="card">
-              <div class="card-content">
-                <p>
-                  <span class="card-title"><a href="http://www.rhdri.org" class="teal-text hoverline">Employee of the
-                      Year</a></span>
-                </p>
-                <p class="brown-text">RHD-RI | Aug 2011</p>
-                <ul>
-                  <li>
-                    Nominated by management and coworkers for exceptional work
-                    ethic and dedication to clients.
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col s12 m6">
-            <div class="card">
-              <div class="card-content">
-                <p>
-                  <span class="card-title"><a href="http://upenn.edu" class="teal-text hoverline">Most Valuable
-                      Staff</a></span>
-                </p>
-                <p class="brown-text">RHD-RI | Dec 2010</p>
-                <ul>
-                  <li>
-                    Awarded to the staff that went above in beyond in
-                    preparation, effort, and sales at the Winter Art show.
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> -->
-
-    <!-- Seventh Section: Education -->
-    <section id="education" class="section scrollspy">
-      <h3 class="page-title white-text teal">Education</h3>
-      <div class="container">
-        <div class="row">
-          <!-- Education Latest -->
-          <!-- <div class="col s12 m6">
-            <div class="card">
-              <div class="card-content">
-                <p>
-                  <span class="card-title"><a href="http://www.ufl.edu/" class="teal-text hoverline">University of
-                      Florida</a></span>
-                </p>
-                <p class="brown-text">Gainesville, FL</p>
-                <ul>
-                  <li>MS in Computer Science</li>
-                  <li>Upcoming Student</li>
-                </ul>
-              </div>
-            </div>
-          </div>
- -->
-          <!-- Education 2 -->
-          <div class="col s12 m6">
-            <div class="card">
-              <div class="card-content">
-                <p>
-                  <span class="card-title"><a href="https://ahduni.edu.in/" class="teal-text hoverline">Ahmedabad
-                      University</a></span>
-                </p>
-                <p class="brown-text">Ahmedabad, India</p>
-                <p>
-                  <b>Degree: </b>Bachelor of Technology in Information and Communication Technology
-                  <br>
-                  <b>CGPA: </b>3.13/4.33
-                </p>
-
-                <ul>
-                  <p>
-                    <b>Relevant Courseworks:</b>
-                  <ul>
-                    <li>Data Structures and Algorithms</li>
-                    <li>Database Management Systems</li>
-                    <li>Operating Systems</li>
-                    <li>Machine Learning</li>
-                    <li>Computer Vision</li>
-                  </ul>
-                  </p>
-                </ul>
-              </div>
-            </div>
+          <div class="crow">
+            <span class="k">github</span>
+            <span class="v"><a href="https://github.com/ezharsavero" target="_blank" rel="noopener">github.com/ezharsavero</a></span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Eight Section: Contact -->
-    <section id="contact" class="section scrollspy full-height">
-      <h3 class="page-title white-text teal">Contact</h3>
-      <div class="container">
-        <p>
-          <a aria-label="Call Varad" data-position="top" data-tooltip="Call Varad"
-            class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i class="fa fa-phone"></i><a
-              aria-label="Call Varad">+918460816663</a></a>
-        </p>
-        <p>
-          <a aria-label="Email Varad" href="mailto:vbhogayata@gmail.com" target="_blank" data-position="top"
-            data-tooltip="Email Varad" class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i
-              class="fa fa-envelope"></i><a aria-label="Email Varad" href="mailto:vbhogayata@gmail.com"
-              class="hoverline">vbhogayata@gmail.com</a></a>
-        </p>
-        <p>
-          <a aria-label="View Varad on GitHub" href="http://github.com/varadbhogayata" target="_blank"
-            data-position="top" data-tooltip="View Varad on GitHub"
-            class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i class="fa fa-github"></i><a
-              aria-label="Varad on Github" href="http://github.com/varadbhogayata" class="hoverline"
-              target="_blank">github.com/varadbhogayata</a></a>
-        </p>
-        <p>
-          <a aria-label="View Varad on LinkedIn" href="http://linkedin.com/in/varadbhogayata" target="_blank"
-            data-position="top" data-tooltip="View Varad on LinkedIn"
-            class="btn-floating btn-large waves-effect waves-light blue-grey tooltipped"><i
-              class="fa fa-linkedin"></i><a aria-label="Varad on LinkedIn" href="http://linkedin.com/in/varadbhogayata"
-              class="hoverline" target="_blank">linkedin.com/in/varadbhogayata</a></a>
-        </p>
-      </div>
-    </section>
-  </main>
+  </div>
+  <footer class="wrap">
+    <span>© <span id="yr"></span> Ezhar Savero R.</span>
+    <span>Dibangun dengan HTML &amp; kopi · Jakarta</span>
+  </footer>
+</main>
 
-  <!--
-      Google Analytics
-      -------------------------------------------------
-      If you want to enable your own account, assign analyticsId to your
-      google analytics id, which should be the numbers following "UA-", e.g.
-      let analyticsId = "12345678-9"
-    -->
-  <script>
-    let analyticsId
+<script>
+  // mobile menu
+  var tgl=document.querySelector('.nav-toggle'),menu=document.getElementById('menu');
+  tgl.addEventListener('click',function(){
+    var open=menu.classList.toggle('open');
+    tgl.setAttribute('aria-expanded',open);
+  });
+  menu.addEventListener('click',function(e){if(e.target.tagName==='A')menu.classList.remove('open');});
 
-    // If analytics id has been manually defined
-    if (analyticsId) {
-      // Initialize GA with local var
-      initGoogleAnalytics(analyticsId)
-    } else {
-      // Initialize GA with Netlify env var available via lamba function
-      // fetch("/.netlify/functions/env_vars")
-      //   .then(getEnvVar)
-      //   .then(initGoogleAnalytics)
-      //   .catch(handleError)
-    }
+  // year
+  document.getElementById('yr').textContent=new Date().getFullYear();
 
-    // -------------------------------------------------
-    // Helper Functions
-    // --------------------------------------------------
-
-    function handleError(error) {
-      console.log("error", error)
-    }
-
-    function getEnvVar(response) {
-      // If the request was successful
-      if (response.ok) {
-        // Return the response text
-        return response.text()
-      } else {
-        // Return a rejected Promise object, triggering the .catch()
-        return Promise.reject(response)
+  // copy buttons
+  document.querySelectorAll('.copy').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.getAttribute('data-copy');
+      function ok(){var o=b.textContent;b.textContent='tersalin';b.classList.add('done');
+        setTimeout(function(){b.textContent=o;b.classList.remove('done');},1400);}
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(t).then(ok).catch(function(){
+          var r=document.createRange();r.selectNodeContents(b.previousElementSibling);
+          var s=getSelection();s.removeAllRanges();s.addRange(r);});
       }
-    }
-
-    // Set Up Google Analytics
-    function initGoogleAnalytics(analyticsId) {
-      if (analyticsId) {
-        // Inject the Google Analytics Tag Manager script into the DOM
-        analyticsUrl =
-          "https://www.googletagmanager.com/gtag/js?id=UA-" + analyticsId
-        var ref = document.getElementsByTagName("script")[0]
-        var script = document.createElement("script")
-        script.src = analyticsUrl
-        ref.parentNode.insertBefore(script, ref)
-
-        // Initialize Google Analytics
-        window.dataLayer = window.dataLayer || []
-        function gtag() {
-          dataLayer.push(arguments)
-        }
-        gtag("js", new Date())
-        gtag("config", "UA-" + analyticsId)
-      }
-    }
-  </script>
-
-  <!-- jQuery-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
-  <!-- Materialize - Compiled and minified JavaScript-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
-  <script>
-    // Materialize - Initializers
-    $(document).ready(function () {
-      $(".scrollspy").scrollSpy()
-      // Initialize collapse button
-      $(".button-collapse").sideNav({
-        menuWidth: 190, // Default is 240
-        edge: "left", // Choose the horizontal origin
-        closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
-      })
-    })
-  </script>
-
-  <!-- nothing to see here...-->
-  <!-- prettier-ignore -->
-  <!-- <small hidden>
-    NETLIFY
-    ___ ___ ___ ___ ___
-    /\ \ /\__\ /\ \ /\__\ ___ /\__\
-    \:\ \ ___ /:/ _/_ \:\ \ /:/ _/_ ___ /\ \ /:/ _/_
-    \:\ \ /\__\ /:/ /\ \ \:\ \ /:/ /\__\ /\__\ \:\ \ /:/ /\__\
-    ___ /::\ \ /:/__/ /:/ /::\ \ ___ /::\ \ /:/ /:/ / /:/__/ \:\ \ /:/ /:/ _/_
-    /\ /:/\:\__\ /::\ \ /:/__\/\:\__\ /\ /:/\:\__\ /:/_/:/ / /::\ \ ___ \:\__\ /:/_/:/ /\__\
-    \:\/:/ \/__/ \/\:\ \__ \:\ \ /:/ / \:\/:/ \/__/ \:\/:/ / \/\:\ \__ /\ \ |:| | \:\/:/ /:/ /
-    \::/__/ ~~\:\/\__\ \:\ /:/ / \::/__/ \::/__/ ~~\:\/\__\ \:\ \|:| | \::/_/:/ /
-    \:\ \ \::/ / \:\/:/ / \:\ \ \:\ \ \::/ / \:\__|:|__| \:\/:/ /
-    \:\__\ /:/ / \::/ / \:\__\ \:\__\ /:/ / \::::/__/ \::/ /
-    \/__/ \/__/ \/__/ \/__/ \/__/ \/__/ ~~~~ \/__/
-  </small> -->
-</body>
-
-</html>
+    });
+  });
+</script>
