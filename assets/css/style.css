@@ -89,6 +89,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .skip:focus { top: 12px; }
 
 .si { width: 1em; height: 1em; fill: currentColor; flex: none; }
+.si-line { fill: none; }
 
 /* ============ Buttons ============ */
 .btn {
@@ -257,14 +258,18 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   padding: 12px 0; border-bottom: 1px solid var(--line);
 }
 .skills .si { width: 20px; height: 20px; color: var(--ink); }
+.certs { margin-top: clamp(40px, 5vw, 64px); }
+.certs h3 { font-size: 18px; font-weight: 700; margin-bottom: 18px; }
+.cert-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .cert {
-  display: flex; align-items: center; gap: 14px; margin-top: 28px;
+  display: flex; align-items: center; gap: 14px;
   padding: 16px; background: var(--surface); border-radius: var(--radius); border: 1px solid var(--line);
 }
 .cert-badge { width: 44px; height: 44px; border-radius: 50%; background: var(--ink); color: var(--paper); display: grid; place-items: center; flex: none; }
 .cert-badge .si { width: 22px; height: 22px; }
 .cert strong { display: block; font-family: var(--font-display); font-size: 17px; }
-.cert span { font-size: 14px; color: var(--muted); }
+.cert div > span { font-size: 14px; color: var(--muted); line-height: 1.45; display: block; }
+@media (max-width: 960px) { .cert-list { grid-template-columns: minmax(0, 1fr); } }
 
 /* Education */
 .edu-list { border-top: 1px solid var(--line); }
