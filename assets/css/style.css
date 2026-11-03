@@ -258,9 +258,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   padding: 12px 0; border-bottom: 1px solid var(--line);
 }
 .skills .si { width: 20px; height: 20px; color: var(--ink); }
-.certs { margin-top: clamp(40px, 5vw, 64px); }
-.certs h3 { font-size: 18px; font-weight: 700; margin-bottom: 18px; }
-.cert-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.certs { margin-top: clamp(48px, 6vw, 72px); }
+.certs h3 { font-size: 18px; font-weight: 700; padding-bottom: 14px; border-bottom: 2px solid var(--ink); margin-bottom: 20px; }
+.cert-list { display: flex; flex-wrap: wrap; gap: 14px; }
+.cert-list .cert { flex: 0 1 300px; min-width: 0; }
 .cert {
   display: flex; align-items: center; gap: 14px;
   padding: 16px; background: var(--surface); border-radius: var(--radius); border: 1px solid var(--line);
@@ -269,7 +270,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .cert-badge .si { width: 22px; height: 22px; }
 .cert strong { display: block; font-family: var(--font-display); font-size: 17px; }
 .cert div > span { font-size: 14px; color: var(--muted); line-height: 1.45; display: block; }
-@media (max-width: 960px) { .cert-list { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 600px) { .cert-list .cert { flex: 1 1 100%; } }
 
 /* Education */
 .edu-list { border-top: 1px solid var(--line); }
