@@ -19,7 +19,7 @@
   --font-display: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-body: "IBM Plex Sans", "Segoe UI", Roboto, sans-serif;
 
-  --wrap: 1120px;
+  --wrap: 1400px;
   --gutter: clamp(16px, 4vw, 40px);
   --radius: 6px;
   color-scheme: light;
