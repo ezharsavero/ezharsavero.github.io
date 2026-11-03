@@ -60,7 +60,7 @@
 
   /* ---------- Typing role ---------- */
   var typedEl = document.getElementById('typed');
-  var words = ['Red Hat OpenShift', 'Enterprise Linux', 'OpenStack private clouds', 'Dell PowerEdge servers', 'scale-out storage'];
+  var words = ['Red Hat OpenShift', 'Red Hat Enterprise Linux', 'Zimbra', 'Dell Server and Storage', 'Omnissa'];
   if (!reduceMotion && typedEl) {
     var wi = 0, ci = words[0].length, deleting = true;
     function tick() {
